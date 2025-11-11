@@ -1,0 +1,9 @@
+.collapse-container {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.collapse-container.open {
+  max-height: 2000px;
+}
