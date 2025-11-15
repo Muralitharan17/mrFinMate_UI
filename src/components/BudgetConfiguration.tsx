@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import type { Section, BudgetConfig } from "../types/Budget";
 import BudgetSectionRow from "./BudgetSectionRow";
 import { useProfileMonthYear } from "../typescript/useProfileMonthYear";
+import InheritModal from "./InheritModal";
 
 interface props {
   onSectionsChange?: (sections: Section[]) => void;
@@ -24,11 +25,20 @@ const BudgetConfiguration: React.FC<props> = ({ onSectionsChange}) => {
   const [selectedSectionId, setSelectedSectionId] = useState< string | number | null>(null);
   const [sectionOptions, setSectionOptions] = useState<string[]>([]);
 
+  const [showInheritModal, setShowInheritModal] = useState(false);
+
   const loadBudgetConfig = (data: BudgetConfig) => {
     setSalary(data.actualSalary || 0);
     setBudgetPercentage(data.budgetPercentage || 0);
     setBudgetSalary(data.budgetSalary || 0);
     setSectionArr(data.sections || []);
+  };
+
+    // called when modal returns the inherited config
+  const handleInheritedConfig = (config: BudgetConfig) => {
+    // Load the returned config into this component (no id reuse on UI side)
+    loadBudgetConfig(config);
+    // NOTE: backend has already ensured IDs are safely handled per agreed approach
   };
 
   useEffect(() => {
@@ -67,7 +77,7 @@ const BudgetConfiguration: React.FC<props> = ({ onSectionsChange}) => {
           setBudgetSalary(0);
         }
       });
-  }, [profileId, month, year]);
+  }, [profileId, month, year, showInheritModal]);
 
   useEffect(() => {
     setBudgetSalary(((salary || 0) * (budgetPercentage || 0)) / 100);
@@ -229,7 +239,24 @@ const BudgetConfiguration: React.FC<props> = ({ onSectionsChange}) => {
 
   return (
     <div>
-      <h3 className="my-3">Budget Configuration</h3>
+      {/* Header with Inherit button */}
+      <div className="d-flex justify-content-between align-items-center my-3">
+        <h3>Budget Configuration</h3>
+
+        <button className="btn btn-outline-primary" onClick={() => setShowInheritModal(true)}>
+          Inherit Config
+        </button>
+      </div>
+
+      {/* Inherit Modal - pass current profile/month/year as target */}
+      <InheritModal
+        show={showInheritModal}
+        onClose={() => setShowInheritModal(false)}
+        onInherit={handleInheritedConfig}
+        targetProfileId={profileId}
+        targetMonth={month}
+        targetYear={year}
+      />
 
       {/* Salary input */}
       <div className="row mb-3">
