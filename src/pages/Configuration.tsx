@@ -1,12 +1,14 @@
 import React, { useState, useCallback, useEffect } from "react";
 import BudgetConfiguration from "../components/BudgetConfiguration";
 import InvestmentConfiguration from "../components/InvestmentConfiguration";
+import WantConfiguration from "../components/WantConfiguration";
 import SavingConfiguration from "../components/SavingConfiguration";
 import InsuranceConfiguration from "../components/InsuranceConfiguration";
 import MasterConfiguration from "../components/MasterConfiguration";
 import type { Section } from "../types/Budget";
 import { useProfileMonthYear } from "../typescript/useProfileMonthYear";
 import ProfileConfiguration from "../components/ProfileConfiguration";
+import GoalConfiguration from "../components/GoalConfiguration";
 
 const Configuration: React.FC = () => {
   const { profileId, month, year } = useProfileMonthYear();
@@ -31,12 +33,16 @@ const Configuration: React.FC = () => {
     switch (activeTab) {
       case "Budget":
         return <BudgetConfiguration onSectionsChange={handleSectionUpdate} />;
+      case "Wants":
+        return <WantConfiguration sectionArr={sectionArr} />;
       case "Investment":
         return <InvestmentConfiguration sectionArr={sectionArr} />;
       case "Saving":
         return <SavingConfiguration sectionArr={sectionArr} />;
       case "Insurance":
         return <InsuranceConfiguration sectionArr={sectionArr} />;
+      case "Goal":
+        return <GoalConfiguration />;
       case "Master":
         return <MasterConfiguration />;
       case "Profile":
@@ -54,7 +60,7 @@ const Configuration: React.FC = () => {
         <>
           {/* Tabs */}
           <ul className="nav nav-tabs mb-4">
-            {["Budget", "Investment", "Saving", "Insurance", "Master", "Profile"].map((tab) => (
+            {["Budget", "Wants", "Saving", "Investment", "Insurance", "Master", "Goal", "Profile"].map((tab) => (
               <li className="nav-item" key={tab}>
                 <button
                   className={`nav-link ${activeTab === tab ? "active" : ""}`}

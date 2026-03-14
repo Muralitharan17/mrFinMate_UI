@@ -35,7 +35,7 @@ interface Expense {
 
 type Level = "TRANSACTION" | "SECTION" | "FINANCE_TYPE" | "CATEGORY" | "DETAIL";
 
-const Dashboard: React.FC = () => {
+const AnalyticsDashboard: React.FC = () => {
   const { profileId, month, year } = useProfileMonthYear();
 
   const [expenses, setExpenses] = useState<Expense[]>([]);
@@ -57,7 +57,7 @@ const Dashboard: React.FC = () => {
     try {
       setLoading(true);
       const res = await axios.get<Expense[]>(
-        `${API_BASE}/expenses?profileId=${profileId}&month=${month}&year=${year}`
+        `${API_BASE}/expenses?profileId=${profileId}&month=${month}&year=${year}&onlyExpenses=true`
       );
       setExpenses(res.data);
       buildTransactionChart(res.data);
@@ -297,4 +297,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default AnalyticsDashboard;

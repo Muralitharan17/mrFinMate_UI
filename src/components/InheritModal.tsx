@@ -27,9 +27,6 @@ const InheritModal: React.FC<Props> = ({ show, onClose, onInherit, targetProfile
   const [sourceMonthOptions, setSourceMonthOptions] = useState<string[]>([]);
   const [sourceYearOptions, setSourceYearOptions] = useState<string[]>([]);
 
-  const [targetMonthOptions, setTargetMonthOptions] = useState<string[]>([]);
-  const [targetYearOptions, setTargetYearOptions] = useState<string[]>([]);
-
   const [targetMonthLocal, setTargetMonthLocal] = useState<string>(targetMonth || "");
   const [targetYearLocal, setTargetYearLocal] = useState<string>(targetYear || "");
 
@@ -75,21 +72,6 @@ const InheritModal: React.FC<Props> = ({ show, onClose, onInherit, targetProfile
   // fetch target month/year options for the chosen targetProfileId (if available)
   useEffect(() => {
     if (!show || !targetProfileId) return;
-    const fetch = async () => {
-      try {
-        const mRes = await axios.get(`${API_BASE}/value`, {
-          params: { profileId: targetProfileId, configName: "MONTH_OPTIONS", month: "", year: "" },
-        });
-        const yRes = await axios.get(`${API_BASE}/value`, {
-          params: { profileId: targetProfileId, configName: "YEAR_OPTIONS", month: "", year: "" },
-        });
-        if (mRes.data) setTargetMonthOptions(mRes.data.split(",").map((s: string) => s.trim()));
-        if (yRes.data) setTargetYearOptions(yRes.data.split(",").map((s: string) => s.trim()));
-      } catch (err) {
-        console.error("Error fetching target month/year options:", err);
-      }
-    };
-    fetch();
     // default target values from props
     setTargetMonthLocal(targetMonth || "");
     setTargetYearLocal(targetYear || "");
@@ -195,39 +177,6 @@ const InheritModal: React.FC<Props> = ({ show, onClose, onInherit, targetProfile
             </div>
 
             <hr />
-
-            {/* Target selection (uses targetProfileId passed from parent; allow picking month/year) */}
-            <div className="mb-3">
-              <label className="form-label fw-medium">Target Profile</label>
-              <input className="form-control" readOnly value={targetProfileId ?? ""} />
-              <div className="form-text">Target profile (where data will be inherited).</div>
-            </div>
-
-            <div className="row g-2">
-              <div className="col-md-6 mb-3">
-                <label className="form-label fw-medium">Target Month</label>
-                <select className="form-select" value={targetMonthLocal} onChange={(e) => setTargetMonthLocal(e.target.value)}>
-                  <option value="">Select Month</option>
-                  {targetMonthOptions.map((m) => (
-                    <option key={m} value={m}>
-                      {m}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="col-md-6 mb-3">
-                <label className="form-label fw-medium">Target Year</label>
-                <select className="form-select" value={targetYearLocal} onChange={(e) => setTargetYearLocal(e.target.value)}>
-                  <option value="">Select Year</option>
-                  {targetYearOptions.map((y) => (
-                    <option key={y} value={y}>
-                      {y}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
           </div>
 
           <div className="modal-footer">

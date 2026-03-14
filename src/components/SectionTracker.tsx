@@ -88,7 +88,7 @@ const SectionTracker: React.FC<SectionTrackerProps> = ({ sectionArr }) => {
                 <div className="col">
                   <span className="text-muted small">Allotted</span>
                   <div className="fw-bold text-primary">
-                    ₹{(allocatedAmount || 0).toLocaleString()}
+                    ₹{(allocatedAmount || 0).toLocaleString("en-IN")}
                   </div>
                 </div>
                 <div className="col">
@@ -98,13 +98,13 @@ const SectionTracker: React.FC<SectionTrackerProps> = ({ sectionArr }) => {
                       spentPct > 100 ? "text-danger" : "text-warning"
                     }`}
                   >
-                   ₹{(spentAmount || 0).toLocaleString()}
+                   ₹{(spentAmount || 0).toLocaleString("en-IN")}
                   </div>
                 </div>
                 <div className="col">
                   <span className="text-muted small">Balance</span>
                   <div className="fw-bold text-success">
-                    ₹{(balanceAmount || 0).toLocaleString()}
+                    ₹{(balanceAmount || 0).toLocaleString("en-IN")}
                   </div>
                 </div>
               </div>

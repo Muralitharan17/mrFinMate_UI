@@ -46,7 +46,7 @@ const BudgetTracker: React.FC = () => {
         <div className="mb-3">
           <div className="d-flex justify-content-between align-items-center">
             <span className="fw-semibold text-secondary">Budget Salary</span>
-            <span className="fw-bold text-dark">₹{budgetSalary.toLocaleString()}</span>
+            <span className="fw-bold text-dark">₹{budgetSalary.toLocaleString("en-IN")}</span>
           </div>
         </div>
 
@@ -55,7 +55,7 @@ const BudgetTracker: React.FC = () => {
           <div className="d-flex justify-content-between align-items-center">
             <span className="fw-semibold text-secondary">Spent Salary</span>
             <span className={`fw-bold ${spentPercentage > 100 ? "text-danger" : "text-warning"}`}>
-              ₹{spentSalary.toLocaleString()}
+              ₹{spentSalary.toLocaleString("en-IN")}
             </span>
           </div>
           <div className="progress" style={{ height: "14px" }}>
@@ -73,7 +73,7 @@ const BudgetTracker: React.FC = () => {
         <div>
           <div className="d-flex justify-content-between align-items-center">
             <span className="fw-semibold text-secondary">Balance Salary</span>
-            <span className="fw-bold text-success">₹{balanceSalary.toLocaleString()}</span>
+            <span className="fw-bold text-success">₹{balanceSalary.toLocaleString("en-IN")}</span>
           </div>
           <div className="progress" style={{ height: "14px" }}>
             <div
