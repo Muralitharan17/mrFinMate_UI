@@ -3,6 +3,8 @@ export type Section = {
     name: string;   // e.g., "Needs", "Wants", "Savings"
     percentage: number;     // user-defined percentage (0-100)
     allocatedAmount: number; // calculated amount based on salary
+    spentAmount: number;     // amount spent in this section
+    balanceAmount: number;   // remaining balance in this section
 };
 
 export type BudgetConfig = {
@@ -12,6 +14,8 @@ export type BudgetConfig = {
     actualSalary: number;       // actual salary input by user
     budgetPercentage: number;  // percentage of salary to consider for budgeting
     budgetSalary: number;      // calculated budget salary
+    spentSalary: number;      // total amount spent
+    balanceSalary: number;    // remaining balance
     createdUser: string;
     updatedUser: string;
     deletedDate: string | null;
